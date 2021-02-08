@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:dxe="clr-namespace:DevExpress.XamarinForms.Editors;assembly=DevExpress.XamarinForms.Editors"
+    xmlns:local="clr-namespace:EditorsLoginPage"
+    x:Class="EditorsLoginPage.MainPage"
+    ios:Page.UseSafeArea="True">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="countryItemTemplate">
+            <StackLayout
+                Orientation="Horizontal"
+                Padding="4"
+                Spacing="4">
+                <Label
+                    Text="{Binding Code}"
+                    LineBreakMode="NoWrap"
+                    VerticalOptions="Center"/>
+                <Label
+                    Text="{Binding Country}"
+                    LineBreakMode="NoWrap"
+                    VerticalOptions="Center"/>
+            </StackLayout>
+        </DataTemplate>
+        <local:StringToBoolConverter x:Key="stringToBoolConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <local:LoginViewModel/>
+    </ContentPage.BindingContext>
+    
+    <Grid
+        VerticalOptions="FillAndExpand"
+        RowSpacing="0"
+        ColumnSpacing="8"
+        Padding="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <dxe:ComboBoxEdit
+            Grid.Column="0"
+            Grid.Row="1"
+            LabelText="Country"
+            ItemsSource="{Binding CountryCodes}"
+            DisplayMember="Code"
+            SelectedItem="{Binding SelectedCountryCode}"
+            TextHorizontalAlignment="End"
+            ItemTemplate="{StaticResource countryItemTemplate}">
+        </dxe:ComboBoxEdit>
+
+        <dxe:TextEdit
+            LabelText="Phone"
+            Grid.Column="1"
+            Grid.Row="1"
+            Mask="{Binding SelectedCountryCode.PhoneMask}"
+            Text="{Binding PhoneNumber}"
+            ReserveBottomTextLine="True"
+            IsLabelFloating="False"
+            Keyboard="Telephone"
+            IsFocused="{Binding PhoneNumberIsFocused}"
+            ErrorText="{Binding PhoneNumberErrorMessage}"
+            HasError="{Binding PhoneNumberErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+
+        <dxe:PasswordEdit
+            Grid.Column="0"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            LabelText="Password"
+            Text="{Binding Password}"
+            ReserveBottomTextLine="True"
+            IsLabelFloating="False"
+            MaxCharacterCount="8"
+            IsFocused="{Binding PasswordIsFocused}"
+            ErrorText="{Binding PasswordErrorMessage}"
+            HasError="{Binding PasswordErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+
+        <dxe:SimpleButton
+            Grid.Column="0"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="0,6,0,0"
+            Text="Login"
+            Command="{Binding LoginCommand}"/>
+    </Grid>
+</ContentPage>
