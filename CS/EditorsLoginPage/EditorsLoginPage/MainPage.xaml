@@ -30,53 +30,40 @@
     <ContentPage.BindingContext>
         <local:LoginViewModel/>
     </ContentPage.BindingContext>
-    
-    <Grid
-        VerticalOptions="FillAndExpand"
-        RowSpacing="0"
-        ColumnSpacing="8"
-        Padding="8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="6*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="6*"/>
-        </Grid.ColumnDefinitions>
-
-        <dxe:ComboBoxEdit
-            Grid.Column="0"
-            Grid.Row="1"
-            LabelText="Country"
-            ItemsSource="{Binding CountryCodes}"
-            DisplayMember="Code"
-            SelectedItem="{Binding SelectedCountryCode}"
-            TextHorizontalAlignment="End"
-            ItemTemplate="{StaticResource countryItemTemplate}">
-        </dxe:ComboBoxEdit>
-
-        <dxe:TextEdit
-            LabelText="Phone"
-            Grid.Column="1"
-            Grid.Row="1"
-            Mask="{Binding SelectedCountryCode.PhoneMask}"
-            Text="{Binding PhoneNumber}"
-            ReserveBottomTextLine="True"
-            IsLabelFloating="False"
-            Keyboard="Telephone"
-            IsFocused="{Binding PhoneNumberIsFocused}"
-            ErrorText="{Binding PhoneNumberErrorMessage}"
-            HasError="{Binding PhoneNumberErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
-
+    <StackLayout
+        Spacing="8"
+        Padding="8"
+        VerticalOptions="Center">
+        <Grid
+            Padding="0"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <dxe:ComboBoxEdit
+                Grid.Column="0"
+                LabelText="Country"
+                ItemsSource="{Binding CountryCodes}"
+                DisplayMember="Code"
+                VerticalOptions="Start"
+                SelectedItem="{Binding SelectedCountryCode}"
+                TextHorizontalAlignment="End"
+                ItemTemplate="{StaticResource countryItemTemplate}">
+            </dxe:ComboBoxEdit>
+            <dxe:TextEdit
+                LabelText="Phone"
+                Grid.Column="1"
+                Mask="{Binding SelectedCountryCode.PhoneMask}"
+                Text="{Binding PhoneNumber}"
+                ReserveBottomTextLine="True"
+                IsLabelFloating="False"
+                Keyboard="Telephone"
+                IsFocused="{Binding PhoneNumberIsFocused}"
+                ErrorText="{Binding PhoneNumberErrorMessage}"
+                HasError="{Binding PhoneNumberErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+        </Grid>
         <dxe:PasswordEdit
-            Grid.Column="0"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            LabelText="Password"
             Text="{Binding Password}"
             ReserveBottomTextLine="True"
             IsLabelFloating="False"
@@ -84,13 +71,9 @@
             IsFocused="{Binding PasswordIsFocused}"
             ErrorText="{Binding PasswordErrorMessage}"
             HasError="{Binding PasswordErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
-
         <dxe:SimpleButton
-            Grid.Column="0"
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
             Margin="0,6,0,0"
             Text="Login"
             Command="{Binding LoginCommand}"/>
-    </Grid>
+    </StackLayout>
 </ContentPage>
